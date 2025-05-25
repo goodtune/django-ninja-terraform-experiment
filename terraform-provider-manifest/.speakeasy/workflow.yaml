@@ -1,0 +1,12 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    Manifest API:
+        inputs:
+            - location: http://127.0.0.1:8000/api/v1/openapi.json
+        registry:
+            location: registry.speakeasyapi.dev/touch-technology/experiment/manifest-api
+targets:
+    manifest:
+        target: terraform
+        source: Manifest API
