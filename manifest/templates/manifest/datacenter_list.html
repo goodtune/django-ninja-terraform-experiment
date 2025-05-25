@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Datacenters{% endblock %}
+
+{% block content %}
+<h1>Datacenters</h1>
+<ul>
+    {% for datacenter in datacenters %}
+    <li>
+        <a href="{% url 'datacenter_detail' datacenter.pk %}">{{ datacenter.name }}</a>
+    </li>
+    {% empty %}
+    <li>No datacenters available.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

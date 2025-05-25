@@ -1,5 +1,6 @@
-from django.views.generic import ListView, DetailView
-from manifest.models import Datacenter, Rack, Switch, Server
+from django.views.generic import DetailView, ListView
+
+from manifest.models import Datacenter, Rack, Server, Switch
 
 
 class DatacenterListView(ListView):
