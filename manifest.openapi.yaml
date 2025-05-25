@@ -4,21 +4,7 @@ info:
   version: 1.0.0
   description: ''
 paths:
-  /api/v1/datacenters:
-    get:
-      operationId: manifest_api_v1_list_datacenters
-      summary: List Datacenters
-      parameters: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/DatacenterSchema'
-                title: Response
-                type: array
+  /api/v1/datacenter:
     post:
       operationId: manifest_api_v1_create_datacenter
       summary: Create Datacenter
@@ -29,14 +15,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatacenterSchema'
+                $ref: '#/components/schemas/Datacenter'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatacenterCreateSchema'
+              $ref: '#/components/schemas/Datacenter'
         required: true
-  /api/v1/datacenters/{datacenter_id}:
+      x-speakeasy-entity-operation: Datacenter#create
+  /api/v1/datacenter/{datacenter_id}:
     get:
       operationId: manifest_api_v1_get_datacenter
       summary: Get Datacenter
@@ -53,48 +40,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatacenterSchema'
-  /api/v1/racks:
-    get:
-      operationId: manifest_api_v1_list_racks
-      summary: List Racks
-      parameters: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/RackSchema'
-                title: Response
-                type: array
+                $ref: '#/components/schemas/Datacenter'
+      x-speakeasy-entity-operation: Datacenter#read
     post:
-      operationId: manifest_api_v1_create_rack
-      summary: Create Rack
-      parameters: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RackSchema'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RackCreateSchema'
-        required: true
-  /api/v1/racks/{rack_id}:
-    get:
-      operationId: manifest_api_v1_get_rack
-      summary: Get Rack
+      operationId: manifest_api_v1_update_datacenter
+      summary: Update Datacenter
       parameters:
         - in: path
-          name: rack_id
+          name: datacenter_id
           schema:
-            title: Rack Id
+            title: Datacenter Id
             type: integer
           required: true
       responses:
@@ -103,10 +58,35 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RackSchema'
+                $ref: '#/components/schemas/Datacenter'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Datacenter'
+        required: true
+      x-speakeasy-entity-operation: Datacenter#update
+    delete:
+      operationId: manifest_api_v1_delete_datacenter
+      summary: Delete Datacenter
+      parameters:
+        - in: path
+          name: datacenter_id
+          schema:
+            title: Datacenter Id
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Datacenter'
+      x-speakeasy-entity-operation: Datacenter#delete
 components:
   schemas:
-    DatacenterSchema:
+    Datacenter:
       properties:
         id:
           anyOf:
@@ -124,66 +104,7 @@ components:
       required:
         - name
         - location
-      title: DatacenterSchema
+      title: Datacenter
       type: object
-    DatacenterCreateSchema:
-      properties:
-        name:
-          maxLength: 100
-          title: Name
-          type: string
-        location:
-          maxLength: 200
-          title: Location
-          type: string
-      required:
-        - name
-        - location
-      title: DatacenterCreateSchema
-      type: object
-    RackSchema:
-      properties:
-        id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: ID
-        datacenter:
-          title: Datacenter
-          type: integer
-        name:
-          maxLength: 50
-          title: Name
-          type: string
-        position:
-          anyOf:
-            - maxLength: 50
-              type: string
-            - type: 'null'
-          title: Position
-      required:
-        - datacenter
-        - name
-      title: RackSchema
-      type: object
-    RackCreateSchema:
-      properties:
-        name:
-          maxLength: 50
-          title: Name
-          type: string
-        position:
-          anyOf:
-            - maxLength: 50
-              type: string
-            - type: 'null'
-          title: Position
-        datacenter_id:
-          title: Datacenter
-          type: integer
-      required:
-        - name
-        - datacenter_id
-      title: RackCreateSchema
-      type: object
+      x-speakeasy-entity: Datacenter
 servers: []

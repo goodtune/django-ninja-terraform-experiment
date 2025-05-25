@@ -2,64 +2,68 @@ from typing import List
 
 from django.shortcuts import get_object_or_404
 from ninja import ModelSchema, NinjaAPI
+from pydantic.json_schema import GenerateJsonSchema
+from pydantic import BaseModel, ConfigDict
 
-from manifest.models import Datacenter, Rack
+from manifest import models
 
 api = NinjaAPI(title="Manifest API", version="1.0.0")
 
 
-class DatacenterSchema(ModelSchema):
+class Datacenter(ModelSchema):
     class Meta:
-        model = Datacenter
+        model = models.Datacenter
         fields = "__all__"
 
+    model_config = ConfigDict(json_schema_extra={"x-speakeasy-entity": "Datacenter"})
 
-class DatacenterCreateSchema(ModelSchema):
+
+class Rack(ModelSchema):
     class Meta:
-        model = Datacenter
-        fields = ["name", "location"]
-
-
-class RackSchema(ModelSchema):
-    class Meta:
-        model = Rack
+        model = models.Rack
         fields = "__all__"
 
-
-class RackCreateSchema(ModelSchema):
-    class Meta:
-        model = Rack
-        fields = ["name", "position", "datacenter"]
+    model_config = ConfigDict(json_schema_extra={"x-speakeasy-entity": "Rack"})
 
 
-@api.get("/datacenters", response=List[DatacenterSchema])
-def list_datacenters(request):
-    return Datacenter.objects.all()
-
-
-@api.get("/datacenters/{datacenter_id}", response=DatacenterSchema)
-def get_datacenter(request, datacenter_id: int):
-    return get_object_or_404(Datacenter, id=datacenter_id)
-
-
-@api.post("/datacenters", response=DatacenterSchema)
-def create_datacenter(request, payload: DatacenterCreateSchema):
+@api.post(
+    "/datacenter",
+    response=Datacenter,
+    openapi_extra={"x-speakeasy-entity-operation": "Datacenter#create"},
+)
+def create_datacenter(request, payload: Datacenter):
     datacenter = Datacenter.objects.create(**payload.dict())
     return datacenter
 
 
-# Add endpoints for Racks
-@api.get("/racks", response=List[RackSchema])
-def list_racks(request):
-    return Rack.objects.all()
+@api.get(
+    "/datacenter/{datacenter_id}",
+    response=Datacenter,
+    openapi_extra={"x-speakeasy-entity-operation": "Datacenter#read"},
+)
+def get_datacenter(request, datacenter_id: int):
+    return get_object_or_404(Datacenter, id=datacenter_id)
 
 
-@api.get("/racks/{rack_id}", response=RackSchema)
-def get_rack(request, rack_id: int):
-    return get_object_or_404(Rack, id=rack_id)
+@api.post(
+    "/datacenter/{datacenter_id}",
+    response=Datacenter,
+    openapi_extra={"x-speakeasy-entity-operation": "Datacenter#update"},
+)
+def update_datacenter(request, datacenter_id: int, payload: Datacenter):
+    datacenter = get_object_or_404(Datacenter, id=datacenter_id)
+    for attr, value in payload.dict().items():
+        setattr(datacenter, attr, value)
+    datacenter.save()
+    return datacenter
 
 
-@api.post("/racks", response=RackSchema)
-def create_rack(request, payload: RackCreateSchema):
-    rack = Rack.objects.create(**payload.dict())
-    return rack
+@api.delete(
+    "/datacenter/{datacenter_id}",
+    response=Datacenter,
+    openapi_extra={"x-speakeasy-entity-operation": "Datacenter#delete"},
+)
+def delete_datacenter(request, datacenter_id: int):
+    datacenter = get_object_or_404(Datacenter, id=datacenter_id)
+    datacenter.delete()
+    return {"success": True}
