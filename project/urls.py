@@ -18,7 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from manifest.api.v1 import api
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("manifest.urls")),
+    path("manifest/", include("manifest.urls")),
+    path("api/v1/", api.urls),
 ]
