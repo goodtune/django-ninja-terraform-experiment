@@ -7,7 +7,7 @@
 <ul>
     {% for datacenter in datacenters %}
     <li>
-        <a href="{% url 'datacenter_detail' datacenter.pk %}">{{ datacenter.name }}</a>
+        <a href="{% url 'manifest:datacenter' datacenter.pk %}">{{ datacenter.name }}</a>
     </li>
     {% empty %}
     <li>No datacenters available.</li>

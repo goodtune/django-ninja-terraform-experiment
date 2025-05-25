@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Datacenter: {{ datacenter.name }}</h1>
+    <p><strong>Location:</strong> {{ datacenter.location }}</p>
+
+    <h2>Racks</h2>
+    {% if datacenter.racks.all %}
+        <ul>
+            {% for rack in datacenter.racks.all %}
+                <li>
+                    <h3>{{ rack.name }}{% if rack.position %} (Position: {{ rack.position }}){% endif %}</h3>
+                    
+                    <h4>Switches</h4>
+                    {% if rack.switches.all %}
+                        <ul>
+                            {% for switch in rack.switches.all %}
+                                <li>
+                                    {{ switch.name }} - Model: {{ switch.model }}{% if switch.ip_address %} - IP: {{ switch.ip_address }}{% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No switches assigned.</p>
+                    {% endif %}
+
+                    <h4>Servers</h4>
+                    {% if rack.servers.all %}
+                        <ul>
+                            {% for server in rack.servers.all %}
+                                <li>
+                                    {{ server.name }} - Hostname: {{ server.hostname }} - Status: {{ server.status }}{% if server.ip_address %} - IP: {{ server.ip_address }}{% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No servers assigned.</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No racks found in this datacenter.</p>
+    {% endif %}
+{% endblock %}
