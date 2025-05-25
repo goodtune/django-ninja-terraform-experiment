@@ -23,11 +23,11 @@ func (r *DatacenterDataSourceModel) ToOperationsManifestApiv1GetDatacenterReques
 	return &out, diags
 }
 
-func (r *DatacenterDataSourceModel) RefreshFromSharedDatacenter(ctx context.Context, resp *shared.Datacenter) diag.Diagnostics {
+func (r *DatacenterDataSourceModel) RefreshFromSharedDatacenterResponse(ctx context.Context, resp *shared.DatacenterResponse) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	if resp != nil {
-		r.ID = types.Int64PointerValue(resp.ID)
+		r.ID = types.Int64Value(resp.ID)
 		r.Location = types.StringValue(resp.Location)
 		r.Name = types.StringValue(resp.Name)
 	}

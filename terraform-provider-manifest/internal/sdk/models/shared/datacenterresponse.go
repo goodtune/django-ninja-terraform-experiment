@@ -2,19 +2,27 @@
 
 package shared
 
-type Datacenter struct {
+type DatacenterResponse struct {
+	ID       int64  `json:"id"`
 	Name     string `json:"name"`
 	Location string `json:"location"`
 }
 
-func (o *Datacenter) GetName() string {
+func (o *DatacenterResponse) GetID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ID
+}
+
+func (o *DatacenterResponse) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *Datacenter) GetLocation() string {
+func (o *DatacenterResponse) GetLocation() string {
 	if o == nil {
 		return ""
 	}

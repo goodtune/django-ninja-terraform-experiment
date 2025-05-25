@@ -116,11 +116,11 @@ func (r *DatacenterDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if !(res.Datacenter != nil) {
+	if !(res.DatacenterResponse != nil) {
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDatacenter(ctx, res.Datacenter)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDatacenterResponse(ctx, res.DatacenterResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return

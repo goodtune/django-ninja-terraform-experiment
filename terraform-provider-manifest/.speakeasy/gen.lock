@@ -1,18 +1,17 @@
 lockVersion: 2.0.0
 id: 2fe7b345-964b-43dd-8d77-444b6d736738
 management:
-  docChecksum: fd40599607d733902d54122e61f56db5
+  docChecksum: 5d59d138bca58d6998f534e78da1e154
   docVersion: 1.0.0
   speakeasyVersion: 1.551.0
   generationVersion: 2.610.0
-  releaseVersion: 0.0.1
-  configChecksum: 44a8f7981517133016290409d7c1b509
+  releaseVersion: 0.1.0
+  configChecksum: 61390d5f5988fbc4120da5d92c64d3e0
 features:
   terraform:
     additionalDependencies: 0.1.0
     core: 3.41.10
     globalServerURLs: 2.82.2
-    nullables: 0.0.0
 generatedFiles:
   - .gitattributes
   - USAGE.md
@@ -79,6 +78,7 @@ generatedFiles:
   - internal/sdk/models/operations/manifestapiv1updatedatacenter.go
   - internal/sdk/models/operations/options.go
   - internal/sdk/models/shared/datacenter.go
+  - internal/sdk/models/shared/datacenterresponse.go
   - internal/sdk/retry/config.go
   - internal/sdk/types/bigint.go
   - internal/sdk/types/date.go
@@ -110,7 +110,7 @@ examples:
         application/json: {"name": "<value>", "location": "<value>"}
       responses:
         "200":
-          application/json: {"name": "<value>", "location": "<value>"}
+          application/json: {"id": 847480, "name": "<value>", "location": "<value>"}
   manifest_api_v1_get_datacenter:
     speakeasy-default-manifest-api-v1-get-datacenter:
       parameters:
@@ -118,7 +118,7 @@ examples:
           id: 247327
       responses:
         "200":
-          application/json: {"name": "<value>", "location": "<value>"}
+          application/json: {"id": 247327, "name": "<value>", "location": "<value>"}
   manifest_api_v1_update_datacenter:
     speakeasy-default-manifest-api-v1-update-datacenter:
       parameters:
@@ -128,7 +128,7 @@ examples:
         application/json: {"name": "<value>", "location": "<value>"}
       responses:
         "200":
-          application/json: {"name": "<value>", "location": "<value>"}
+          application/json: {"id": 72948, "name": "<value>", "location": "<value>"}
   manifest_api_v1_delete_datacenter:
     speakeasy-default-manifest-api-v1-delete-datacenter:
       parameters:
@@ -136,6 +136,6 @@ examples:
           id: 356698
       responses:
         "200":
-          application/json: {"name": "<value>", "location": "<value>"}
+          application/json: {"id": 356698, "name": "<value>", "location": "<value>"}
 examplesVersion: 1.0.2
 generatedTests: {}

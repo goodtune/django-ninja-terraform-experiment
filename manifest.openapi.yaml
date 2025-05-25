@@ -15,7 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Datacenter'
+                $ref: '#/components/schemas/DatacenterResponse'
       requestBody:
         content:
           application/json:
@@ -44,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Datacenter'
+                $ref: '#/components/schemas/DatacenterResponse'
       x-speakeasy-entity-operation: Datacenter#read
     post:
       operationId: manifest_api_v1_update_datacenter
@@ -62,7 +62,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Datacenter'
+                $ref: '#/components/schemas/DatacenterResponse'
       requestBody:
         content:
           application/json:
@@ -86,17 +86,33 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Datacenter'
+                $ref: '#/components/schemas/DatacenterResponse'
       x-speakeasy-entity-operation: Datacenter#delete
 components:
   schemas:
-    Datacenter:
+    DatacenterResponse:
       properties:
         id:
-          anyOf:
-            - type: integer
-            - type: 'null'
-          title: ID
+          readOnly: true
+          title: Id
+          type: integer
+        name:
+          maxLength: 100
+          title: Name
+          type: string
+        location:
+          maxLength: 200
+          title: Location
+          type: string
+      required:
+        - id
+        - name
+        - location
+      title: DatacenterResponse
+      type: object
+      x-speakeasy-entity: Datacenter
+    Datacenter:
+      properties:
         name:
           maxLength: 100
           title: Name

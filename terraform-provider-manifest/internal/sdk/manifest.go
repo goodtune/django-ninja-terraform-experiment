@@ -93,9 +93,9 @@ func New(serverURL string, opts ...SDKOption) *Manifest {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.0.1",
+			SDKVersion:        "0.1.0",
 			GenVersion:        "2.610.0",
-			UserAgent:         "speakeasy-sdk/terraform 0.0.1 2.610.0 1.0.0 github.com/speakeasy/terraform-provider-manifest/internal/sdk",
+			UserAgent:         "speakeasy-sdk/terraform 0.1.0 2.610.0 1.0.0 github.com/speakeasy/terraform-provider-manifest/internal/sdk",
 			ServerURL:         serverURL,
 			Hooks:             hooks.New(),
 		},
@@ -223,12 +223,12 @@ func (s *Manifest) ManifestAPIV1CreateDatacenter(ctx context.Context, request sh
 				return nil, err
 			}
 
-			var out shared.Datacenter
+			var out shared.DatacenterResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Datacenter = &out
+			res.DatacenterResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -346,12 +346,12 @@ func (s *Manifest) ManifestAPIV1GetDatacenter(ctx context.Context, request opera
 				return nil, err
 			}
 
-			var out shared.Datacenter
+			var out shared.DatacenterResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Datacenter = &out
+			res.DatacenterResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -476,12 +476,12 @@ func (s *Manifest) ManifestAPIV1UpdateDatacenter(ctx context.Context, request op
 				return nil, err
 			}
 
-			var out shared.Datacenter
+			var out shared.DatacenterResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Datacenter = &out
+			res.DatacenterResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -599,12 +599,12 @@ func (s *Manifest) ManifestAPIV1DeleteDatacenter(ctx context.Context, request op
 				return nil, err
 			}
 
-			var out shared.Datacenter
+			var out shared.DatacenterResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Datacenter = &out
+			res.DatacenterResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

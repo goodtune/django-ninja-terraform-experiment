@@ -13,12 +13,6 @@ import (
 func (r *DatacenterResourceModel) ToSharedDatacenter(ctx context.Context) (*shared.Datacenter, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
-	id := new(int64)
-	if !r.ID.IsUnknown() && !r.ID.IsNull() {
-		*id = r.ID.ValueInt64()
-	} else {
-		id = nil
-	}
 	var name string
 	name = r.Name.ValueString()
 
@@ -26,7 +20,6 @@ func (r *DatacenterResourceModel) ToSharedDatacenter(ctx context.Context) (*shar
 	location = r.Location.ValueString()
 
 	out := shared.Datacenter{
-		ID:       id,
 		Name:     name,
 		Location: location,
 	}
@@ -81,11 +74,11 @@ func (r *DatacenterResourceModel) ToOperationsManifestApiv1DeleteDatacenterReque
 	return &out, diags
 }
 
-func (r *DatacenterResourceModel) RefreshFromSharedDatacenter(ctx context.Context, resp *shared.Datacenter) diag.Diagnostics {
+func (r *DatacenterResourceModel) RefreshFromSharedDatacenterResponse(ctx context.Context, resp *shared.DatacenterResponse) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	if resp != nil {
-		r.ID = types.Int64PointerValue(resp.ID)
+		r.ID = types.Int64Value(resp.ID)
 		r.Location = types.StringValue(resp.Location)
 		r.Name = types.StringValue(resp.Name)
 	}

@@ -2,8 +2,8 @@ speakeasyVersion: 1.551.0
 sources:
     Manifest API:
         sourceNamespace: manifest-api
-        sourceRevisionDigest: sha256:ec5026ffcb9d88b6007a5ff1862b65e76a6d4908ee12331864ac88219abc7a1e
-        sourceBlobDigest: sha256:c51443bdc080cdf3ecb6a4c62abd41ad8c5cca87645d42abb7fa6c2652eb7472
+        sourceRevisionDigest: sha256:dd647813e9f14cfc478157f968e6ff49815f4443bb90aec88c5cd649e61427a4
+        sourceBlobDigest: sha256:d84f51281d074d5ff1f846cf3c7254c4a31447ad6ddbbb9d4be14f52dad58d4a
         tags:
             - latest
             - 1.0.0
@@ -11,8 +11,8 @@ targets:
     manifest:
         source: Manifest API
         sourceNamespace: manifest-api
-        sourceRevisionDigest: sha256:ec5026ffcb9d88b6007a5ff1862b65e76a6d4908ee12331864ac88219abc7a1e
-        sourceBlobDigest: sha256:c51443bdc080cdf3ecb6a4c62abd41ad8c5cca87645d42abb7fa6c2652eb7472
+        sourceRevisionDigest: sha256:dd647813e9f14cfc478157f968e6ff49815f4443bb90aec88c5cd649e61427a4
+        sourceBlobDigest: sha256:d84f51281d074d5ff1f846cf3c7254c4a31447ad6ddbbb9d4be14f52dad58d4a
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

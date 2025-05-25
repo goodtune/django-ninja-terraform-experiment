@@ -15,7 +15,7 @@ type ManifestAPIV1CreateDatacenterResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK
-	Datacenter *shared.Datacenter
+	DatacenterResponse *shared.DatacenterResponse
 }
 
 func (o *ManifestAPIV1CreateDatacenterResponse) GetContentType() string {
@@ -39,9 +39,9 @@ func (o *ManifestAPIV1CreateDatacenterResponse) GetRawResponse() *http.Response 
 	return o.RawResponse
 }
 
-func (o *ManifestAPIV1CreateDatacenterResponse) GetDatacenter() *shared.Datacenter {
+func (o *ManifestAPIV1CreateDatacenterResponse) GetDatacenterResponse() *shared.DatacenterResponse {
 	if o == nil {
 		return nil
 	}
-	return o.Datacenter
+	return o.DatacenterResponse
 }

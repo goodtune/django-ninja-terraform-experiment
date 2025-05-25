@@ -17,7 +17,7 @@ generation:
     oAuth2PasswordEnabled: true
   sdkHooksConfigAccess: true
 terraform:
-  version: 0.0.1
+  version: 0.1.0
   additionalDataSources: []
   additionalDependencies: {}
   additionalEphemeralResources: []

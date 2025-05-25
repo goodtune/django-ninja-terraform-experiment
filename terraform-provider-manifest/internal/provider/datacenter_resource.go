@@ -46,7 +46,6 @@ func (r *DatacenterResource) Schema(ctx context.Context, req resource.SchemaRequ
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Computed: true,
-				Optional: true,
 			},
 			"location": schema.StringAttribute{
 				Required: true,
@@ -124,11 +123,11 @@ func (r *DatacenterResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if !(res.Datacenter != nil) {
+	if !(res.DatacenterResponse != nil) {
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDatacenter(ctx, res.Datacenter)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDatacenterResponse(ctx, res.DatacenterResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -188,11 +187,11 @@ func (r *DatacenterResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if !(res.Datacenter != nil) {
+	if !(res.DatacenterResponse != nil) {
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDatacenter(ctx, res.Datacenter)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDatacenterResponse(ctx, res.DatacenterResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -238,11 +237,11 @@ func (r *DatacenterResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if !(res.Datacenter != nil) {
+	if !(res.DatacenterResponse != nil) {
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDatacenter(ctx, res.Datacenter)...)
+	resp.Diagnostics.Append(data.RefreshFromSharedDatacenterResponse(ctx, res.DatacenterResponse)...)
 
 	if resp.Diagnostics.HasError() {
 		return
