@@ -1,3 +1,4 @@
+from ast import Mod
 from typing import List
 
 from django.shortcuts import get_object_or_404
@@ -13,7 +14,15 @@ api = NinjaAPI(title="Manifest API", version="1.0.0")
 class Datacenter(ModelSchema):
     class Meta:
         model = models.Datacenter
-        fields = "__all__"
+        fields = ["id", "name", "location"]
+
+    model_config = ConfigDict(json_schema_extra={"x-speakeasy-entity": "Datacenter"})
+
+
+class DatacenterCreate(ModelSchema):
+    class Meta:
+        model = models.Datacenter
+        fields = ["name", "location"]
 
     model_config = ConfigDict(json_schema_extra={"x-speakeasy-entity": "Datacenter"})
 
@@ -29,29 +38,37 @@ class Rack(ModelSchema):
 @api.post(
     "/datacenter",
     response=Datacenter,
-    openapi_extra={"x-speakeasy-entity-operation": "Datacenter#create"},
+    openapi_extra={
+        "x-speakeasy-entity-operation": "Datacenter#create",
+        "x-speakeasy-match": [
+            {
+                "operationId": "manifest_api_v1_get_datacenter",
+                "parameters": {"id": "$response.body.id"},
+            }
+        ],
+    },
 )
 def create_datacenter(request, payload: Datacenter):
-    datacenter = Datacenter.objects.create(**payload.dict())
+    datacenter = models.Datacenter.objects.create(**payload.dict())
     return datacenter
 
 
 @api.get(
-    "/datacenter/{datacenter_id}",
+    "/datacenter/{id}",
     response=Datacenter,
     openapi_extra={"x-speakeasy-entity-operation": "Datacenter#read"},
 )
-def get_datacenter(request, datacenter_id: int):
-    return get_object_or_404(Datacenter, id=datacenter_id)
+def get_datacenter(request, id: int):
+    return get_object_or_404(models.Datacenter, id=id)
 
 
 @api.post(
-    "/datacenter/{datacenter_id}",
+    "/datacenter/{id}",
     response=Datacenter,
     openapi_extra={"x-speakeasy-entity-operation": "Datacenter#update"},
 )
-def update_datacenter(request, datacenter_id: int, payload: Datacenter):
-    datacenter = get_object_or_404(Datacenter, id=datacenter_id)
+def update_datacenter(request, id: int, payload: Datacenter):
+    datacenter = get_object_or_404(models.Datacenter, id=id)
     for attr, value in payload.dict().items():
         setattr(datacenter, attr, value)
     datacenter.save()
@@ -59,11 +76,11 @@ def update_datacenter(request, datacenter_id: int, payload: Datacenter):
 
 
 @api.delete(
-    "/datacenter/{datacenter_id}",
+    "/datacenter/{id}",
     response=Datacenter,
     openapi_extra={"x-speakeasy-entity-operation": "Datacenter#delete"},
 )
-def delete_datacenter(request, datacenter_id: int):
-    datacenter = get_object_or_404(Datacenter, id=datacenter_id)
+def delete_datacenter(request, id: int):
+    datacenter = get_object_or_404(models.Datacenter, id=id)
     datacenter.delete()
     return {"success": True}

@@ -23,15 +23,19 @@ paths:
               $ref: '#/components/schemas/Datacenter'
         required: true
       x-speakeasy-entity-operation: Datacenter#create
-  /api/v1/datacenter/{datacenter_id}:
+      x-speakeasy-match:
+        - operationId: manifest_api_v1_get_datacenter
+          parameters:
+            id: $response.body.id
+  /api/v1/datacenter/{id}:
     get:
       operationId: manifest_api_v1_get_datacenter
       summary: Get Datacenter
       parameters:
         - in: path
-          name: datacenter_id
+          name: id
           schema:
-            title: Datacenter Id
+            title: Id
             type: integer
           required: true
       responses:
@@ -47,9 +51,9 @@ paths:
       summary: Update Datacenter
       parameters:
         - in: path
-          name: datacenter_id
+          name: id
           schema:
-            title: Datacenter Id
+            title: Id
             type: integer
           required: true
       responses:
@@ -71,9 +75,9 @@ paths:
       summary: Delete Datacenter
       parameters:
         - in: path
-          name: datacenter_id
+          name: id
           schema:
-            title: Datacenter Id
+            title: Id
             type: integer
           required: true
       responses:
