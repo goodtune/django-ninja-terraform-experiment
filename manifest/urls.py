@@ -1,5 +1,4 @@
 from django.urls import path
-
 from manifest.views import (
     DatacenterDetailView,
     DatacenterListView,

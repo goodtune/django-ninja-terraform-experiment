@@ -2,11 +2,10 @@ from ast import Mod
 from typing import List
 
 from django.shortcuts import get_object_or_404
-from ninja import ModelSchema, NinjaAPI
-from pydantic.json_schema import GenerateJsonSchema
-from pydantic import BaseModel, ConfigDict
-
 from manifest import models
+from ninja import ModelSchema, NinjaAPI
+from pydantic import ConfigDict, Field
+from pydantic.json_schema import GenerateJsonSchema
 
 api = NinjaAPI(title="Manifest API", version="1.0.0")
 
@@ -14,15 +13,17 @@ api = NinjaAPI(title="Manifest API", version="1.0.0")
 class Datacenter(ModelSchema):
     class Meta:
         model = models.Datacenter
-        fields = ["id", "name", "location"]
+        fields = ["name", "location"]
 
     model_config = ConfigDict(json_schema_extra={"x-speakeasy-entity": "Datacenter"})
 
 
-class DatacenterCreate(ModelSchema):
+class DatacenterResponse(ModelSchema):
+    id: int = Field(..., readOnly=True)
+
     class Meta:
         model = models.Datacenter
-        fields = ["name", "location"]
+        fields = ["id", "name", "location"]
 
     model_config = ConfigDict(json_schema_extra={"x-speakeasy-entity": "Datacenter"})
 
@@ -37,7 +38,7 @@ class Rack(ModelSchema):
 
 @api.post(
     "/datacenter",
-    response=Datacenter,
+    response=DatacenterResponse,
     openapi_extra={
         "x-speakeasy-entity-operation": "Datacenter#create",
         "x-speakeasy-match": [
@@ -55,7 +56,7 @@ def create_datacenter(request, payload: Datacenter):
 
 @api.get(
     "/datacenter/{id}",
-    response=Datacenter,
+    response=DatacenterResponse,
     openapi_extra={"x-speakeasy-entity-operation": "Datacenter#read"},
 )
 def get_datacenter(request, id: int):
@@ -64,7 +65,7 @@ def get_datacenter(request, id: int):
 
 @api.post(
     "/datacenter/{id}",
-    response=Datacenter,
+    response=DatacenterResponse,
     openapi_extra={"x-speakeasy-entity-operation": "Datacenter#update"},
 )
 def update_datacenter(request, id: int, payload: Datacenter):
@@ -77,7 +78,7 @@ def update_datacenter(request, id: int, payload: Datacenter):
 
 @api.delete(
     "/datacenter/{id}",
-    response=Datacenter,
+    response=DatacenterResponse,
     openapi_extra={"x-speakeasy-entity-operation": "Datacenter#delete"},
 )
 def delete_datacenter(request, id: int):

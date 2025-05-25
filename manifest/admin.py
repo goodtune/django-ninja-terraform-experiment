@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from manifest.models import Datacenter, Rack, Server, Switch
 
 

@@ -1,5 +1,4 @@
 from django.views.generic import DetailView, ListView
-
 from manifest.models import Datacenter, Rack, Server, Switch
 
 
